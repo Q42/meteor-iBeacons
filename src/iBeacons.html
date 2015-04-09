@@ -8,19 +8,18 @@
 
 <template name="hello">
 
-    {{#with region}}
-    <div class="beacon {{region.data.identifier}}">
-        {{region.data.identifier}}
 
-    </div>
-    {{/with}}
+  <div class="room {{currentRoom.label}}">{{currentRoom.label}}</div>
 
-    <div class="allRegions">
-        {{#each allRegions}}
-            <div class="region">{{data.identifier}}
-                {{#if here}}✓
-                {{/if}}
-            </div>
-        {{/each}}
+
+    <div class="panel panel-bottom">
+      <div class="allBeacons">
+          {{#each beacons}}
+              <div class="beacon">
+                <div class="label">{{label}}</div>
+                <div class="range" style="width: {{width}}px;"></div>
+              </div>
+          {{/each}}
+      </div>
     </div>
 </template>

@@ -1,19 +1,22 @@
 var prev = null;
 Template.hello.helpers({
 
-    region: function() {
-        var regions = Regions.find({ state : 'CLRegionStateInside' }).fetch();
-        console.log(regions);
-        if (regions.length == 1)
-            return regions[0];
+  beacons: function() {
+    return beacons.get();
+  },
 
-        return { data : { identifier: '?' }};
-    },
-    allRegions: function() {
-        return  Regions.find().fetch();
-    },
+  currentRoom : function() {
+    var localBeacons = beacons.get();
+    var currentRoom = { rssi: -Infinity };
+    localBeacons.forEach(function(b){
+      if (b.rssi > currentRoom.rssi)
+        currentRoom = b;
+    })
 
-    here: function() {
-        return this && this.state == 'CLRegionStateInside';
-    }
+    return currentRoom;
+  },
+
+  width: function() {
+    return 100 + this.rssi;
+  }
 });
